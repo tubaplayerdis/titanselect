@@ -229,7 +229,7 @@ const char* ts::selector::get_selected_auton_name()
 
 //C-impl functions
 
-extern "C" void create_auton(const char* name, const void(*function)())
+extern "C" void create_auton(const char* name, void(*function)())
 {
     ts::auton(name, function);
 }

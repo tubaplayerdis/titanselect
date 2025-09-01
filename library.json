@@ -1,0 +1,16 @@
+{
+  "name": "titanselect",
+  "version": "1.0.0",
+  "description": "Auton selector made by vex team 38535A",
+  "author": "Aaron Wilk",
+  "license": "MIT",
+  "keywords": ["pros", "autons"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tubaplayerdis/titanselect"
+  },
+  "files": [
+    "include/",
+    "bin/titianselect.a"
+  ]
+}

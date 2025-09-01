@@ -60,12 +60,12 @@ namespace ts
     struct auton
     {
         const char* name;
-        const void(*function)();
+        void(*function)();
 
         /// Creates and registers an auton.
         /// @param Name Name of the auton
         /// @param Function Function pointer of the function the auton should run.
-        auton(const char* Name, const void(*Function)()) : name(Name), function(Function)
+        auton(const char* Name, void(*Function)()) : name(Name), function(Function)
         {
             ts::selector::register_auton(*this);
         }

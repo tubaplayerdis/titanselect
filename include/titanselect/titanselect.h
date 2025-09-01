@@ -7,7 +7,7 @@ extern "C" {
 /// Creates an auton.
 /// @param name Name of the auton
 /// @param function Function pointer to the autons function.
-void create_auton(const char* name, const void(*function)());
+void create_auton(const char* name, void(*function)());
 
 /// Initializes and displays the selector.
 void selector_display_selector();
