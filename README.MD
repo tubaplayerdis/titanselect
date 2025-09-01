@@ -36,5 +36,5 @@ titanselect has both a C and C++ api. to take advantage of each, include the res
 
 read the following documentation for each language:
 
-[titanselect C API](https://github.com/tubaplayerdis/titanselect/CDOCS.MD) 
-[titanselect C++ API](https://github.com/tubaplayerdis/titanselect/CPPDOCS.MD)
+[titanselect C API](https://github.com/tubaplayerdis/titanselect/blob/main/CDOCS.MD) 
+[titanselect C++ API](https://github.com/tubaplayerdis/titanselect/blob/main/CPPDOCS.MD)
