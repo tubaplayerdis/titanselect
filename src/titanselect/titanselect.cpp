@@ -250,12 +250,12 @@ extern "C" char selector_is_auton_selected()
     return 0;
 }
 
-extern "C" void selector_run_selected_atuon()
+extern "C" void selector_run_selected_auton()
 {
     ts::selector::get()->run_selected_auton();
 }
 
-extern "C" void selector_run_atuon(const char* name)
+extern "C" void selector_run_auton(const char* name)
 {
     ts::selector::get()->run_auton(name);
 }

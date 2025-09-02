@@ -1,4 +1,5 @@
 //titanselect C API
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,11 +21,11 @@ void selector_hide_selector();
 char selector_is_auton_selected();
 
 /// Runs the selected auton.
-void selector_run_selected_atuon();
+void selector_run_selected_auton();
 
 /// Runs the specified auton by name
 /// @param name Name of the auton to run.
-void selector_run_atuon(const char* name);
+void selector_run_auton(const char* name);
 
 /// Selected auton name.
 /// @returns Name of the selected auton. nullptr if none is selected.
