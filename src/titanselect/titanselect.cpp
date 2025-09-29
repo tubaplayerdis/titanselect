@@ -182,18 +182,18 @@ ts::selector::~selector()
 
 void ts::selector::display()
 {
-    set_lv_obj_visibility(l_button_matrix, true);
-    set_lv_obj_visibility(l_selected_auton_label, true);
-    set_lv_obj_visibility(l_run_selected_auton_button, true);
-    set_lv_obj_visibility(l_run_selected_auton_button_label, true);
-}
-
-void ts::selector::hide()
-{
     set_lv_obj_visibility(l_button_matrix, false);
     set_lv_obj_visibility(l_selected_auton_label, false);
     set_lv_obj_visibility(l_run_selected_auton_button, false);
     set_lv_obj_visibility(l_run_selected_auton_button_label, false);
+}
+
+void ts::selector::hide()
+{
+    set_lv_obj_visibility(l_button_matrix, true);
+    set_lv_obj_visibility(l_selected_auton_label, true);
+    set_lv_obj_visibility(l_run_selected_auton_button, true);
+    set_lv_obj_visibility(l_run_selected_auton_button_label, true);
 }
 
 bool ts::selector::is_auton_selected()
