@@ -42,7 +42,7 @@ const char* read_saved_auton()
 
     for(ts::auton auton : registry_internal)
     {
-        if(line.compare(auton.name) == 0) return auton.name;
+        if(line == auton.name) return auton.name;
     }
 
     return nullptr;
@@ -229,38 +229,38 @@ const char* ts::selector::get_selected_auton_name()
 
 //C-impl functions
 
-extern "C" void create_auton(const char* name, void(*function)())
+extern "C" void ts_create_auton(const char* name, void(*function)())
 {
     ts::auton(name, function);
 }
 
-extern "C" void selector_display_selector()
+extern "C" void ts_display_selector()
 {
     ts::selector::get()->display();
 }
 
-extern "C" void selector_hide_selector()
+extern "C" void ts_hide_selector()
 {
     ts::selector::get()->hide();
 }
 
-extern "C" char selector_is_auton_selected()
+extern "C" char ts_is_auton_selected()
 {
     if(ts::selector::get()->is_auton_selected()) return 1;
     return 0;
 }
 
-extern "C" void selector_run_selected_auton()
+extern "C" void ts_run_selected_auton()
 {
     ts::selector::get()->run_selected_auton();
 }
 
-extern "C" void selector_run_auton(const char* name)
+extern "C" void ts_run_auton(const char* name)
 {
     ts::selector::get()->run_auton(name);
 }
 
-extern "C" const char* selector_get_selected_auton_name()
+extern "C" const char* ts_get_selected_auton_name()
 {
     return ts::selector::get()->get_selected_auton_name();
 }
