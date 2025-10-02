@@ -50,7 +50,7 @@ const char* read_saved_auton()
 
 void write_saved_auton(const char* auton)
 {
-    std::ofstream file(ts::SELECTOR_NO_AUTON_TEXT);
+    std::ofstream file(ts::SELECTOR_AUTON_FILE_PATH);
     if (!file || !file.is_open()) return;
     file << auton;
     file.close();
