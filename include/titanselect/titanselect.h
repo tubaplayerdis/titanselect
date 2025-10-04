@@ -39,7 +39,7 @@ void ts_get_auton_names(const char** buffer);
 
 /// Attempts to select an auton on the selector.
 /// @param name Name of the Auton.
-/// @return Whether an auton was selected.
+/// @return Whether the inputted auton was selected.
 bool ts_select_auton(const char* name);
 
 #ifdef __cplusplus
