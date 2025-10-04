@@ -55,6 +55,11 @@ namespace ts
         /// @return vector of strings with the No Auton autons omited.
         std::vector<std::string> get_auton_names();
 
+        /// Attempts to select an auton on the selector.
+        /// @param name Name of the Auton.
+        /// @return Whether an auton was selected.
+        bool select_auton(const char* name);
+
         public:
 
         /// Access and or create the selector.

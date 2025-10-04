@@ -12,7 +12,7 @@ extern "C"
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	selector_display_selector();
+	ts_display_selector();
 }
 
 /**
@@ -33,7 +33,7 @@ void disabled() {}
  */
 void competition_initialize() 
 {
-	if(!selector_is_auton_selected())
+	if(!ts_is_auton_selected())
 	{
 		//Handle no selected auton
 	}
@@ -51,7 +51,7 @@ void competition_initialize()
  * from where it left off.
  */
 void autonomous() {
-	selector_run_selected_auton();
+	ts_run_selected_auton();
 }
 
 /**
