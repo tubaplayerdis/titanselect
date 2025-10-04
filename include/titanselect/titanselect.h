@@ -31,6 +31,11 @@ void ts_run_auton(const char* name);
 /// @returns Name of the selected auton. nullptr if none is selected.
 const char* ts_get_selected_auton_name();
 
+/// All the names of the registered autons.
+/// @note autons not present are filled in as nullptr in the array.
+/// @returns Array length is 16. A pointer to a to an array of strings of the auton names.
+const char** ts_get_auton_names();
+
 #ifdef __cplusplus
 }
 #endif

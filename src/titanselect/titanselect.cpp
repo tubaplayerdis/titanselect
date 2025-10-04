@@ -2,6 +2,8 @@
 #include "../../include/titanselect/titanselect.hpp"
 #include <functional>
 #include <cstring>
+#include <string>
+#include <vector>
 #include <utility>
 #include <fstream>
 #include <filesystem>
@@ -222,9 +224,19 @@ void ts::selector::run_auton(const char* name)
     }
 }
 
-const char* ts::selector::get_selected_auton_name()
+std::string ts::selector::get_selected_auton_name()
 {
-    return a_selected_auton;
+    return std::string(a_selected_auton);
+}
+
+std::vector<std::string> ts::selector::get_auton_names()
+{
+    std::vector<std::string> ret_autons = std::vector<std::string>();
+    for(auton aut : registry_internal)
+    {
+        ret_autons.push_back(aut.name);
+    }
+    return ret_autons;
 }
 
 //C-impl functions
@@ -262,5 +274,20 @@ extern "C" void ts_run_auton(const char* name)
 
 extern "C" const char* ts_get_selected_auton_name()
 {
-    return ts::selector::get()->get_selected_auton_name();
+    return ts::selector::get()->get_selected_auton_name().c_str();
+}
+
+extern "C" const char** ts_get_auton_names()
+{
+    const char* ret_arr[16];
+    for(short i = 0; i < ts::SELECTOR_COLS * ts::SELECTOR_ROWS; i++)
+    {
+        if(strcmp(registry_internal[i].name, "No Auton") == 0)
+        {
+            ret_arr[i] = nullptr;
+            continue;
+        }
+        ret_arr[i] = registry_internal[i].name;
+    }
+    return ret_arr;
 }
