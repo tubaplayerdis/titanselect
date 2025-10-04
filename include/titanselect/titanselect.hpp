@@ -69,7 +69,10 @@ namespace ts
 
     struct auton
     {
+        /// Name of the auton
         const char* name;
+
+        /// Function pointer to the auton function
         void(*function)();
 
         /// Creates and registers an auton.
