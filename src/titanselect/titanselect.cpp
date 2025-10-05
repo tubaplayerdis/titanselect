@@ -294,13 +294,8 @@ extern "C" const char* ts_get_selected_auton_name()
 
 extern "C" void ts_get_auton_names(const char** buffer)
 {
-    for(short i = 0; i < ts::SELECTOR_COLS * ts::SELECTOR_ROWS; i++)
+    for(int i = 0; i < ts::SELECTOR_COLS * ts::SELECTOR_ROWS; i++)
     {
-        if(strcmp(registry_internal[i].name, "No Auton") == 0)
-        {
-            buffer[i] = nullptr;
-            continue;
-        }
         buffer[i] = registry_internal[i].name;
     }
 }
