@@ -28,13 +28,15 @@ void ts_run_selected_auton();
 void ts_run_auton(const char* name);
 
 /// Selected auton name.
-/// @returns Name of the selected auton. "none" if none is selected.
+/// @warning The pointer returned is to the actual selected auton pointer. MODIFICATION IS STRONGLY DISCOURAGED.
+/// @returns Name of the selected auton. "No Auton" if none is selected.
 const char* ts_get_selected_auton_name();
 
 /// All the names of the registered autons. Pass an array of length 16.
-/// @note autons not present are filled in as nullptr in the array.
+/// @warning The names populated in the buffer are pointers to the actual auton names at runtime. MODIFICATION IS STRONGLY DISCOURAGED.
+/// @note If the size of the buffer is not 16 there will be undefined behavior.
 /// @param buffer Array of const char* that is 16 in length.
-/// @returns out
+/// @returns A populated buffer
 void ts_get_auton_names(const char** buffer);
 
 /// Attempts to select an auton on the selector.
