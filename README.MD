@@ -6,15 +6,15 @@ titanselect is a simple visual atuon selector that works on pros. titanselect wa
 
 ### Adding to your project
 
-Download the latest release via the releases tab. Make sure to download the zip file.
+**titanselect ONLY SUPPORTS PROS V2.4.1+** 
 
-Then, fetch the .zip file you downloaded from releases into the pros conductor
+#### Install depot
 
-```pros conduct fetch [path to zip]```
+```pros c add depot titanselect ```
 
-After than run:
+#### Apply latest version (0.0.7)
 
-```pros conduct apply titanselect```
+```pros c apply titanselect@0.0.7```
 
 And thats it!.
 
