@@ -7,7 +7,6 @@ This API provides procedural access to the auton registration, selection, and ex
 
 ### Function: `void ts_create_auton(const char* name, void(*function)())`
 Creates and registers a new autonomous routine.  
-**NOTE:** This needs to be called before calling other functions otherwise the selector will not display the autons.
 
 **Parameters:**
 - `name` — The name of the auton.
@@ -103,7 +102,7 @@ void initialize() {
     ts_create_auton("Left", left_auton);
     ts_create_auton("Right", right_auton);
 
-    // Display selector after registering autons
+    // Display selector
     ts_display_selector();
 
     // Example: manually select and run an auton

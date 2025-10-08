@@ -15,7 +15,6 @@ Handles registration, display, and execution of autonomous routines.
 
 ##### `static selector* get()`
 Accesses (and if necessary, creates) the global selector instance.  
-**NOTE:** If this is called before registering autons the autons will not appear.  
 **Returns:** Pointer to the selector.
 
 ---
@@ -117,7 +116,7 @@ void initialize() {
     ts::auton left("Left", left_auton);
     ts::auton right("Right", right_auton);
     
-    // Display selector after registering autons
+    // Display selector
     ts::selector::get()->display();
 }
 ```
