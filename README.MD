@@ -6,7 +6,8 @@ titanselect is a simple visual atuon selector that works on pros. titanselect wa
 
 ### Install titanselect or update
 
-**titanselect ONLY SUPPORTS PROS V2.4.1+** 
+> [!NOTE]
+> **titanselect ONLY SUPPORTS PROS V2.4.1+** 
 
 #### Install depot
 
