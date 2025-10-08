@@ -10,7 +10,7 @@ titanselect is a simple visual atuon selector that works on pros. titanselect wa
 
 #### Install depot
 
-```pros c add depot titanselect "https://raw.githubusercontent.com/tubaplayerdis/titanselect/refs/heads/main/depot.json"```
+```pros c add-depot titanselect https://raw.githubusercontent.com/tubaplayerdis/titanselect/refs/heads/main/depot.json```
 
 #### Apply latest version (0.0.7)
 
