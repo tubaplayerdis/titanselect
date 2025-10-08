@@ -18,6 +18,8 @@ namespace ts
         static void register_auton(auton a);
         static void handle_events(lv_event_t *e);
 
+        void refresh_selector();
+
         const char* a_selected_auton;
 
         lv_obj_t* l_button_matrix;

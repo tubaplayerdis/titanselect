@@ -33,6 +33,7 @@ namespace ts
 
 std::vector<ts::auton> registry_internal = std::vector<ts::auton>();
 std::unique_ptr<ts::selector> selector_instance = nullptr;
+static const char* btn_map[ts::SELECTOR_ROWS * ts::SELECTOR_COLS + ts::SELECTOR_COLS + 1] = {};//static as to not be deleted
 
 const char* read_saved_auton()
 {
@@ -66,6 +67,7 @@ void set_lv_obj_visibility(lv_obj_t *obj, bool hidden)
 void ts::selector::register_auton(ts::auton a)
 {
     registry_internal.push_back(a);
+    if(selector_instance) selector_instance.get()->refresh_selector();
 }
 
 void ts::selector::handle_events(lv_event_t *e)
@@ -109,8 +111,6 @@ ts::selector::selector()
     if(saved) a_selected_auton = saved;
 
     lv_obj_t * btnm = lv_buttonmatrix_create(lv_screen_active());
-    static const char* btn_map[SELECTOR_ROWS * SELECTOR_COLS + SELECTOR_COLS + 1] = {};
-
 
     //Normally this would go rows->cols, but button matrix likes to be difficult
     short aIndex = 0; //Index for taking stuff out of the autons
@@ -172,6 +172,41 @@ ts::selector::selector()
     l_selected_auton_label = label;
 
     hide();
+}
+
+void ts::selector::refresh_selector()
+{
+    //Normally this would go rows->cols, but button matrix likes to be difficult
+    short aIndex = 0; //Index for taking stuff out of the autons
+    short rIndex = 0; //Index for the one dimensional array of button map
+    std::vector<auton> autons = registry_internal;
+    for (int i = 0; i < SELECTOR_COLS; i++)
+    {
+        for (int j = 0; j < SELECTOR_ROWS; j++)
+        {
+            //Item will not be valid
+            if (autons.size() > aIndex)
+            {
+                if (autons[aIndex].function == nullptr)
+                {
+                    btn_map[rIndex] = SELECTOR_INVALID_AUTON_TEXT;
+                } else
+                {
+                    btn_map[rIndex] = autons[aIndex].name;
+                }
+            } else
+            {
+                btn_map[rIndex] = SELECTOR_NO_AUTON_TEXT;
+            }
+            aIndex++;
+            rIndex++;
+        }
+        btn_map[rIndex] = "\n";
+        rIndex++;
+    }
+    btn_map[rIndex] = "";
+
+    lv_buttonmatrix_set_map(l_button_matrix, btn_map);
 }
 
 ts::selector::~selector()
