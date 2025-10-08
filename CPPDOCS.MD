@@ -1,0 +1,123 @@
+# TitanSelect C++ API Reference
+
+## Namespace: `ts`
+
+---
+
+### Class: `ts::selector`
+
+Auton selection interface for VEX robots using PROS.  
+Handles registration, display, and execution of autonomous routines.
+
+---
+
+#### **Static Methods**
+
+##### `static selector* get()`
+Accesses (and if necessary, creates) the global selector instance.  
+**NOTE:** If this is called before registering autons the autons will not appear.  
+**Returns:** Pointer to the selector.
+
+---
+
+#### **Public Methods**
+
+##### `void display()`
+Displays the selector interface on the screen.
+
+---
+
+##### `void hide()`
+Hides the selector interface from the screen.
+
+---
+
+##### `bool is_auton_selected()`
+Checks if an auton is currently selected.  
+**Returns:** `true` if an auton is selected, otherwise `false`.
+
+---
+
+##### `void run_selected_auton()`
+Executes the currently selected auton.
+
+---
+
+##### `void run_auton(const char* name)`
+Runs a specific auton by its name.  
+**Parameters:**
+- `name` — The name of the auton to run.
+
+---
+
+##### `std::string get_selected_auton_name()`
+Retrieves the name of the currently selected auton.  
+**Returns:**
+- `"none"` if no auton is selected.
+- Otherwise, the name of the selected auton.
+
+---
+
+##### `std::vector<std::string> get_auton_names()`
+Retrieves the names of all registered autons, excluding “No Auton.”  
+**Returns:** A vector of auton names.
+
+---
+
+##### `bool select_auton(const char* name)`
+Attempts to select an auton by name.  
+**Parameters:**
+- `name` — The name of the auton to select.  
+  **Returns:**  
+  `true` if the auton was successfully selected, otherwise `false`.
+
+---
+
+### Struct: `ts::auton`
+
+Represents a single autonomous routine.  
+When constructed, it automatically registers itself with the `selector`.
+
+---
+
+#### **Public Members**
+
+| Member | Type | Description |
+|--------|------|-------------|
+| `name` | `const char*` | The name of the auton. |
+| `function` | `void(*function)()` | Function pointer to the auton’s executable routine. |
+
+---
+
+#### **Constructor**
+
+##### `auton(const char* Name, void(*Function)())`
+Creates and registers an auton.  
+**Parameters:**
+- `Name` — The name of the auton.
+- `Function` — Pointer to the function that implements the auton’s logic.
+
+---
+
+### Example Usage
+
+```cpp
+#include "titanselect.hpp"
+
+void left_auton() {
+    // Left-side autonomous routine
+}
+
+void right_auton() {
+    // Right-side autonomous routine
+}
+
+void initialize() {
+    // Register autonomous routines
+    ts::auton left("Left", left_auton);
+    ts::auton right("Right", right_auton);
+    
+    // Display selector after registering autons
+    ts::selector::get()->display();
+}
+```
