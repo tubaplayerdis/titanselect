@@ -1,16 +1,16 @@
 # titanselect
 
-titanselect is a simple visual atuon selector that works on pros. titanselect was created as a simple proprietary auton selector to be used by vex team 38535A.
+titanselect is a simple visual atuon selector that works on pros. titanselect was created as a simple proprietary auton selector used by vex team 38535A
 
 **NOTE:** titanselect uses **LVGL 9**. Make sure you have to latest pros version installed that supports lvgl 9 to use titanselect
 
-### Adding to your project
+### Install titanselect or update
 
 **titanselect ONLY SUPPORTS PROS V2.4.1+** 
 
 #### Install depot
 
-```pros c add depot titanselect ```
+```pros c add depot titanselect https://raw.githubusercontent.com/tubaplayerdis/titanselect/refs/heads/main/depot.json```
 
 #### Apply latest version (0.0.7)
 
