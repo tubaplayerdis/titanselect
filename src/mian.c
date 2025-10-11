@@ -1,7 +1,6 @@
 #include "main.h"
-#include "titanselect/titanselect.hpp"
-
-ts::selector* selector = nullptr;
+#include "titanselect/titanselect.h"
+#include "pros/adi.h"
 
 void red_left_auton()
 {
@@ -20,11 +19,9 @@ void blue_right_auton()
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	ts::auton("Red Left", red_left_auton);
-	ts::auton("Blue Right", blue_right_auton);
-
-	selector = ts::selector::get();
-	selector->display();
+    ts_create_auton("Red Left", red_left_auton);
+    ts_create_auton("Blue Right", blue_right_auton);
+	ts_display_selector();
 }
 
 /**
@@ -45,7 +42,7 @@ void disabled() {}
  */
 void competition_initialize() 
 {
-	if(!selector->is_auton_selected())
+	if(!ts_is_auton_selected())
 	{
 		//Handle no selected auton
 	}
@@ -63,7 +60,7 @@ void competition_initialize()
  * from where it left off.
  */
 void autonomous() {
-	selector->run_selected_auton();
+	ts_run_selected_auton();
 }
 
 /**
@@ -80,9 +77,9 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	while (true)
+	while (1)
 	{
-		pros::delay(20);
+        delay(20);
 	}
 	
 }
