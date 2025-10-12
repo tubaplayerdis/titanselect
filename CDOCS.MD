@@ -84,6 +84,11 @@ Attempts to select an auton by name.
 
 ---
 
+### Function: `void ts_cycle_autons()`
+Selects the next auton. Will go back to the first registered atuon after reaching the end.
+
+---
+
 ### Example Usage
 
 ```c

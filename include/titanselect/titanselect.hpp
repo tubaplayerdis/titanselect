@@ -62,6 +62,9 @@ namespace ts
         /// @return Whether the inputted auton was selected.
         bool select_auton(const char* name);
 
+        /// Selects the next auton. Will go back to the first registered atuon after reaching the end.
+        void cycle_autons();
+
         public:
 
         /// Access and or create the selector.

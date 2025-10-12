@@ -289,6 +289,25 @@ bool ts::selector::select_auton(const char *name)
     return false;
 }
 
+void ts::selector::cycle_autons()
+{
+    //Find the index of the selected auton in the internal registry.
+    int index = -1;
+    for(int i = 0; i < registry_internal.size(); i++)
+    {
+        if(strcmp(registry_internal[i].name, a_selected_auton) == 0)
+        {
+            index = i;
+            break;
+        }
+    }
+    if(index == -1) return;
+    if(index == registry_internal.size()-1) index = 0;//Go back to first
+
+    ts::selector::select_auton(registry_internal[index].name);
+
+}
+
 //C-impl functions
 
 extern "C" void ts_create_auton(const char* name, void(*function)())
@@ -338,4 +357,9 @@ extern "C" void ts_get_auton_names(const char** buffer)
 extern "C" bool ts_select_auton(const char* name)
 {
     return ts::selector::get()->select_auton(name);
+}
+
+extern "C" void ts_cycle_autons()
+{
+    ts::selector::get()->cycle_autons();
 }

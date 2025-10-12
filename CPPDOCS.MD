@@ -2,6 +2,30 @@
 
 ## Namespace: `ts`
 
+### Struct: `ts::auton`
+
+Represents a single autonomous routine.  
+When constructed, it automatically registers itself with the `selector`.
+
+---
+
+#### **Public Members**
+
+| Member | Type | Description |
+|--------|------|-------------|
+| `name` | `const char*` | The name of the auton. |
+| `function` | `void(*function)()` | Function pointer to the auton’s executable routine. |
+
+---
+
+#### **Constructor**
+
+##### `auton(const char* Name, void(*Function)())`
+Creates and registers an auton.  
+**Parameters:**
+- `Name` — The name of the auton.
+- `Function` — Pointer to the function that implements the auton’s logic.
+
 ---
 
 ### Class: `ts::selector`
@@ -72,29 +96,8 @@ Attempts to select an auton by name.
 
 ---
 
-### Struct: `ts::auton`
-
-Represents a single autonomous routine.  
-When constructed, it automatically registers itself with the `selector`.
-
----
-
-#### **Public Members**
-
-| Member | Type | Description |
-|--------|------|-------------|
-| `name` | `const char*` | The name of the auton. |
-| `function` | `void(*function)()` | Function pointer to the auton’s executable routine. |
-
----
-
-#### **Constructor**
-
-##### `auton(const char* Name, void(*Function)())`
-Creates and registers an auton.  
-**Parameters:**
-- `Name` — The name of the auton.
-- `Function` — Pointer to the function that implements the auton’s logic.
+##### `void cycle_autons()`
+Selects the next auton. Will go back to the first registered atuon after reaching the end.
 
 ---
 
