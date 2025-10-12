@@ -18,5 +18,15 @@
     "supported_kernels": "^4.2.1",
     "target": "v5",
     "version": "0.0.8"
+  },
+  {
+    "metadata": {
+      "location": "https://github.com/tubaplayerdis/titanselect/releases/download/v0.0.9/titanselect@0.0.9.zip"
+    },
+    "name": "titanselect",
+    "py/object": "pros.conductor.templates.base_template.BaseTemplate",
+    "supported_kernels": "^4.2.1",
+    "target": "v5",
+    "version": "0.0.9"
   }
 ]
