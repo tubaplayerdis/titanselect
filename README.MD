@@ -1,23 +1,23 @@
-# titanselect
+# Titanselect
 
 Titanselect is a simple visual atuon selector that works on pros. Titanselect was created as a simple proprietary auton selector used by vex team 38535A after robodash went OOS (Out Of Support)
 
 **NOTE:** titanselect uses **LVGL 9**. Make sure you have to latest pros version installed that supports lvgl 9 to use titanselect
 
-### Install titanselect or update
+## Install Titanselect or update
 
 > [!NOTE]
-> **titanselect ONLY SUPPORTS PROS V2.4.1+** 
+> **Titanselect ONLY SUPPORTS PROS V2.4.1+** 
 
-#### Install depot
+### Install depot
 
 ```pros c add-depot titanselect https://raw.githubusercontent.com/tubaplayerdis/titanselect/refs/heads/main/depot.json```
 
-#### Apply latest version (0.0.8)
+### Apply latest version (0.0.9)
 
-```pros c apply titanselect@0.0.8```
+```pros c apply titanselect@0.0.9```
 
-And thats it!.
+### Titanselect is now installed
 
 ### Showcase
 
