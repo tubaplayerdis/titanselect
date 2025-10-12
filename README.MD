@@ -1,6 +1,6 @@
 # titanselect
 
-titanselect is a simple visual atuon selector that works on pros. titanselect was created as a simple proprietary auton selector used by vex team 38535A
+Titanselect is a simple visual atuon selector that works on pros. Titanselect was created as a simple proprietary auton selector used by vex team 38535A after robodash went OOS (Out Of Support)
 
 **NOTE:** titanselect uses **LVGL 9**. Make sure you have to latest pros version installed that supports lvgl 9 to use titanselect
 
