@@ -44,7 +44,7 @@ void ts_get_auton_names(const char** buffer);
 /// @return Whether the inputted auton was selected.
 bool ts_select_auton(const char* name);
 
-/// Selects the next auton. Will go back to the first registered autuon after reaching the end.
+/// Selects the next auton. Will go back to the first registered auton after reaching the end.
 void ts_cycle_autons();
 
 #ifdef __cplusplus
