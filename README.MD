@@ -4,7 +4,11 @@ Titanselect is a simple visual atuon selector that works on pros. Titanselect wa
 
 **NOTE:** titanselect uses **LVGL 9**. Make sure you have to latest pros version installed that supports lvgl 9 to use titanselect
 
-## Install Titanselect or update
+## Update Titanselect
+
+```pros c update```
+
+## Install Titanselect
 
 > [!NOTE]
 > **Titanselect ONLY SUPPORTS PROS V2.4.1+** 
@@ -17,7 +21,7 @@ Titanselect is a simple visual atuon selector that works on pros. Titanselect wa
 
 ```pros c apply titanselect@0.0.9```
 
-### Titanselect is now installed
+### Thats it!
 
 ### Showcase
 
