@@ -7,6 +7,7 @@
 #include <utility>
 #include <fstream>
 #include <filesystem>
+#include <functional>
 #include "../../include/liblvgl/lvgl.h"
 #include "../../include/pros/misc.hpp"
 
