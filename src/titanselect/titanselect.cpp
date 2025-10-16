@@ -35,23 +35,23 @@ std::vector<ts::auton> registry_internal = std::vector<ts::auton>();
 std::unique_ptr<ts::selector> selector_instance = nullptr;
 static const char* btn_map[ts::SELECTOR_ROWS * ts::SELECTOR_COLS + ts::SELECTOR_COLS + 1] = {};//static as to not be deleted
 
-const char* read_saved_auton()
+std::string read_saved_auton()
 {
     std::ifstream auton_file(ts::SELECTOR_AUTON_FILE_PATH);
-    if (!auton_file || !auton_file.is_open()) return nullptr;
+    if (!auton_file || !auton_file.is_open()) return "";
     
     std::string line;
-    if(!std::getline(auton_file, line)) return nullptr;
+    if(!std::getline(auton_file, line)) return "";
 
     for(ts::auton auton : registry_internal)
     {
         if(line == auton.name) return auton.name;
     }
 
-    return nullptr;
+    return "";
 }
 
-void write_saved_auton(const char* auton)
+void write_saved_auton(std::string auton)
 {
     std::ofstream file(ts::SELECTOR_AUTON_FILE_PATH);
     if (!file || !file.is_open()) return;
@@ -107,8 +107,8 @@ ts::selector::selector()
     l_run_selected_auton_button = nullptr;
     l_run_selected_auton_button_label = nullptr;
 
-    const char* saved = read_saved_auton();
-    if(saved) a_selected_auton = saved;
+    std::string saved = read_saved_auton();
+    if(!saved.empty()) a_selected_auton = saved;
 
     lv_obj_t * btnm = lv_buttonmatrix_create(lv_screen_active());
 
@@ -128,7 +128,7 @@ ts::selector::selector()
                     btn_map[rIndex] = SELECTOR_INVALID_AUTON_TEXT;
                 } else
                 {
-                    btn_map[rIndex] = autons[aIndex].name;
+                    btn_map[rIndex] = autons[aIndex].name.c_str();
                 }
             } else
             {
@@ -192,7 +192,7 @@ void ts::selector::refresh_selector()
                     btn_map[rIndex] = SELECTOR_INVALID_AUTON_TEXT;
                 } else
                 {
-                    btn_map[rIndex] = autons[aIndex].name;
+                    btn_map[rIndex] = autons[aIndex].name.c_str();
                 }
             } else
             {
@@ -235,9 +235,9 @@ void ts::selector::hide()
 
 bool ts::selector::is_auton_selected()
 {
-    if(!a_selected_auton) return false;
-    if(strcmp(a_selected_auton, SELECTOR_NO_AUTON_TEXT) == 0) return false;
-    if(strcmp(a_selected_auton, SELECTOR_INVALID_AUTON_TEXT) == 0) return false;
+    if(a_selected_auton == "") return false;
+    if(a_selected_auton == SELECTOR_NO_AUTON_TEXT) return false;
+    if(a_selected_auton == SELECTOR_INVALID_AUTON_TEXT) return false;
     return true;
 }
 
@@ -247,7 +247,7 @@ void ts::selector::run_selected_auton()
 
     for(ts::auton auton : registry_internal)
     {
-        if(strcmp(a_selected_auton, auton.name) == 0) return auton.function();
+        if(auton.name == a_selected_auton) return auton.function();
     }
 }
 
@@ -295,7 +295,7 @@ void ts::selector::cycle_autons()
     int index = -1;
     for(int i = 0; i < registry_internal.size(); i++)
     {
-        if(strcmp(registry_internal[i].name, a_selected_auton) == 0)
+        if(registry_internal[i].name == a_selected_auton)
         {
             index = i;
             break;
@@ -308,8 +308,10 @@ void ts::selector::cycle_autons()
 
 }
 
-ts::auton::auton(const char* Name, void(*Function)()) : name(Name), function(Function)
+ts::auton::auton(std::string Name, std::function<void()> Function)
 {
+    name = Name;
+    function = Function;
     ts::selector::register_auton(*this);
 }
 
@@ -317,7 +319,9 @@ ts::auton::auton(const char* Name, void(*Function)()) : name(Name), function(Fun
 
 extern "C" void ts_create_auton(const char* name, void(*function)())
 {
-    ts::auton(name, function);
+    std::function<void()> wrapper;
+    wrapper = function;
+    ts::auton(std::string(name), wrapper);
 }
 
 extern "C" void ts_display_selector()
@@ -343,7 +347,7 @@ extern "C" void ts_run_selected_auton()
 
 extern "C" void ts_run_auton(const char* name)
 {
-    ts::selector::get()->run_auton(name);
+    ts::selector::get()->run_auton(std::string(name));
 }
 
 extern "C" const char* ts_get_selected_auton_name()
@@ -356,7 +360,7 @@ extern "C" void ts_get_auton_names(const char** buffer)
 {
     for(int i = 0; i < ts::SELECTOR_COLS * ts::SELECTOR_ROWS; i++)
     {
-        buffer[i] = registry_internal[i].name;
+        buffer[i] = registry_internal[i].name.c_str();
     }
 }
 

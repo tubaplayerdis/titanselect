@@ -21,7 +21,7 @@ namespace ts
 
         void refresh_selector();
 
-        const char* a_selected_auton;
+        std::string a_selected_auton;
 
         lv_obj_t* l_button_matrix;
         lv_obj_t* l_selected_auton_label;
@@ -76,14 +76,14 @@ namespace ts
     struct auton
     {
         /// Name of the auton
-        const char* name;
+        std::string name;
 
         /// Function pointer to the auton function
-        void(*function)();
+        std::function<void()> function;
 
         /// Creates and registers an auton.
         /// @param Name Name of the auton
         /// @param Function Function pointer of the function the auton should run.
-        auton(const char* Name, void(*Function)());
+        auton(std::string Name, std::function<void()> Function);
     };
 }
