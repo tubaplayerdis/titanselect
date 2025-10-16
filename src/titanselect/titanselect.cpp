@@ -251,11 +251,11 @@ void ts::selector::run_selected_auton()
     }
 }
 
-void ts::selector::run_auton(const char* name)
+void ts::selector::run_auton(std::string name)
 {
     for(ts::auton auton : registry_internal)
     {
-        if(strcmp(name, auton.name) == 0) return auton.function();
+        if(name == auton.name) return auton.function();
     }
 }
 
@@ -274,12 +274,12 @@ std::vector<std::string> ts::selector::get_auton_names()
     return ret_autons;
 }
 
-bool ts::selector::select_auton(const char *name)
+bool ts::selector::select_auton(std::string name)
 {
     for(int i = 0; i < ts::SELECTOR_COLS * ts::SELECTOR_ROWS; i++)
     {
         const char* button_name = lv_buttonmatrix_get_button_text(l_button_matrix, i);
-        if(strcmp(button_name, name) == 0)
+        if(name == button_name)
         {
             lv_buttonmatrix_set_selected_button(l_button_matrix, i);
             lv_obj_send_event(l_button_matrix, LV_EVENT_VALUE_CHANGED, &i);
@@ -306,6 +306,11 @@ void ts::selector::cycle_autons()
 
     ts::selector::select_auton(registry_internal[index].name);
 
+}
+
+ts::auton::auton(const char* Name, void(*Function)()) : name(Name), function(Function)
+{
+    ts::selector::register_auton(*this);
 }
 
 //C-impl functions
@@ -343,7 +348,8 @@ extern "C" void ts_run_auton(const char* name)
 
 extern "C" const char* ts_get_selected_auton_name()
 {
-    return ts::selector::get()->get_selected_auton_name().c_str();
+    static std::string selected_auton_name = ts::selector::get()->get_selected_auton_name();
+    return selected_auton_name.c_str();
 }
 
 extern "C" void ts_get_auton_names(const char** buffer)

@@ -5,6 +5,7 @@
 #include "../liblvgl/lvgl.h"
 #include <memory>
 #include <vector>
+#include <string>
 
 namespace ts
 {   
@@ -47,7 +48,7 @@ namespace ts
 
         /// Runs an auton by name.
         /// @param name Name of the auton to run.
-        void run_auton(const char* name);
+        void run_auton(std::string name);
 
         /// The selected autons name.
         /// @return "none" if none is selected, otherwise the selected autons name.
@@ -60,7 +61,7 @@ namespace ts
         /// Attempts to select an auton on the selector.
         /// @param name Name of the Auton.
         /// @return Whether the inputted auton was selected.
-        bool select_auton(const char* name);
+        bool select_auton(std::string name);
 
         /// Selects the next auton. Will go back to the first registered atuon after reaching the end.
         void cycle_autons();
@@ -83,9 +84,6 @@ namespace ts
         /// Creates and registers an auton.
         /// @param Name Name of the auton
         /// @param Function Function pointer of the function the auton should run.
-        auton(const char* Name, void(*Function)()) : name(Name), function(Function)
-        {
-            ts::selector::register_auton(*this);
-        }
+        auton(const char* Name, void(*Function)());
     };
 }
