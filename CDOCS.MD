@@ -1,6 +1,6 @@
-# TitanSelect C API Reference
+# TitanSslect C API Reference
 
-C interface for the TitanSelect auton selector system used in VEX robots running PROS.  
+C interface for the Titanselect auton selector system used in VEX robots running PROS.  
 This API provides procedural access to the auton registration, selection, and execution system.
 
 ---
@@ -31,6 +31,8 @@ Checks whether an auton is currently selected.
 - `1` if an auton is selected.
 - `0` otherwise.
 
+**Tip:**  You can use this in your competition_initialize() function to warn youself that an auton is not selected.
+
 ---
 
 ### Function: `void ts_run_selected_auton()`
@@ -52,9 +54,6 @@ Retrieves the name of the currently selected auton.
 **Returns:**
 - Pointer to the selected auton’s name.
 - `"No Auton"` if none is selected.
-
-⚠️ **Warning:**  
-The returned pointer references internal data — **modifying it is strongly discouraged.**
 
 ---
 
@@ -102,6 +101,11 @@ void right_auton() {
     // Code for right autonomous routine
 }
 
+void autonomous() {
+    // Run the currently selected auton
+	ts_run_selected_auton();
+}
+
 void initialize() {
     // Register autons
     ts_create_auton("Left", left_auton);
@@ -109,10 +113,5 @@ void initialize() {
 
     // Display selector
     ts_display_selector();
-
-    // Example: manually select and run an auton
-    if (ts_select_auton("Left")) {
-        ts_run_selected_auton();
-    }
 }
 ```

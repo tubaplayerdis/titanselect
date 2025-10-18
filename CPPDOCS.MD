@@ -1,4 +1,4 @@
-# TitanSelect C++ API Reference
+# Titanselect C++ API Reference
 
 ## Namespace: `ts`
 
@@ -13,14 +13,14 @@ When constructed, it automatically registers itself with the `selector`.
 
 | Member | Type | Description |
 |--------|------|-------------|
-| `name` | `const char*` | The name of the auton. |
-| `function` | `void(*function)()` | Function pointer to the auton’s executable routine. |
+| `name` | `std::string` | The name of the auton. |
+| `function` | `std::function<void()>` | Function pointer to the auton’s executable routine. |
 
 ---
 
 #### **Constructor**
 
-##### `auton(const char* Name, void(*Function)())`
+##### `auton(std::string Name, std::function<void()> Function)`
 Creates and registers an auton.  
 **Parameters:**
 - `Name` — The name of the auton.
@@ -66,7 +66,7 @@ Executes the currently selected auton.
 
 ---
 
-##### `void run_auton(const char* name)`
+##### `void run_auton(std::string name)`
 Runs a specific auton by its name.  
 **Parameters:**
 - `name` — The name of the auton to run.
@@ -87,7 +87,7 @@ Retrieves the names of all registered autons, excluding “No Auton.”
 
 ---
 
-##### `bool select_auton(const char* name)`
+##### `bool select_auton(std::string name)`
 Attempts to select an auton by name.  
 **Parameters:**
 - `name` — The name of the auton to select.  
@@ -112,6 +112,11 @@ void left_auton() {
 
 void right_auton() {
     // Right-side autonomous routine
+}
+
+void autonomous() {
+    // Run the currently selected auton
+	ts::selector::get()->run_selected_auton();
 }
 
 void initialize() {
