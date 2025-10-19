@@ -17,9 +17,9 @@ Titanselect is a simple visual atuon selector that works on pros. Titanselect wa
 
 ```pros c add-depot titanselect https://raw.githubusercontent.com/tubaplayerdis/titanselect/refs/heads/main/depot.json```
 
-### Apply latest version (0.0.9)
+### Apply latest version (1.0.0)
 
-```pros c apply titanselect@0.0.9```
+```pros c apply titanselect@1.0.0```
 
 ### Thats it!
 
