@@ -53,7 +53,7 @@ Retrieves the name of the currently selected auton.
 
 **Returns:**
 - Pointer to the selected auton’s name.
-- `"No Auton"` if none is selected.
+- `No Auton` if none is selected.
 
 ---
 

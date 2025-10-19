@@ -1,5 +1,6 @@
 #include "main.h"
 #include "titanselect/titanselect.hpp"
+#include "pros/adi.hpp"
 
 ts::selector* selector = nullptr;
 
@@ -13,6 +14,21 @@ void blue_right_auton()
 
 }
 
+void blue_left_auton()
+{
+
+}
+
+void red_right_auton()
+{
+
+}
+
+ts::auton rl("Red Left", red_left_auton);
+ts::auton br("Blue Right", blue_right_auton);
+ts::auton rr("Red Right", red_right_auton);
+ts::auton bl("Blue Left", blue_left_auton);
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -20,9 +36,6 @@ void blue_right_auton()
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	ts::auton("Red Left", red_left_auton);
-	ts::auton("Blue Right", blue_right_auton);
-
 	selector = ts::selector::get();
 	selector->display();
 }
@@ -80,9 +93,20 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	pros::Controller master = pros::Controller(pros::E_CONTROLLER_MASTER);
+	master.clear();
+	std::string selected = selector->get_selected_auton_name();
 	while (true)
 	{
-		pros::delay(20);
+		selected = selector->get_selected_auton_name();
+		master.print(1,0, "TS: %s  ", selected.c_str());
+
+		if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B))
+		{
+			selector->cycle_autons();
+		}
+
+		pros::delay(100);
 	}
 	
 }

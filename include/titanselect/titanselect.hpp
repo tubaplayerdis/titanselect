@@ -52,7 +52,7 @@ namespace ts
         void run_auton(std::string name);
 
         /// The selected autons name.
-        /// @return "none" if none is selected, otherwise the selected autons name.
+        /// @return "No Auton" if none is selected, otherwise the selected autons name.
         std::string get_selected_auton_name();
 
         /// The names of all the autons registered with titanselect.

@@ -1,13 +1,23 @@
+//Define or undefine this to resolve linker errors when doing language switches
+
+#define NOT_IN_USE
+
+#ifdef NOT_IN_USE
+#define TS(x) _not_in_use_##x
+#else
+#define TS(x) x
+#endif
+
 #include "main.h"
 #include "titanselect/titanselect.h"
 #include "pros/adi.h"
 
-void red_left_auton()
+void TS(red_left_auton)()
 {
 
 }
 
-void blue_right_auton()
+void TS(blue_right_auton)()
 {
 
 }
@@ -18,9 +28,9 @@ void blue_right_auton()
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {
-    ts_create_auton("Red Left", red_left_auton);
-    ts_create_auton("Blue Right", blue_right_auton);
+void TS(initialize)() {
+    ts_create_auton("Red Left", TS(red_left_auton));
+    ts_create_auton("Blue Right", TS(blue_right_auton));
 	ts_display_selector();
 }
 
@@ -29,7 +39,7 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void TS(disabled)() {}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -40,7 +50,7 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() 
+void TS(competition_initialize)() 
 {
 	if(!ts_is_auton_selected())
 	{
@@ -59,7 +69,7 @@ void competition_initialize()
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
+void TS(autonomous)() {
 	ts_run_selected_auton();
 }
 
@@ -76,10 +86,11 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() {
+void TS(opcontrol)() {
 	while (1)
 	{
         delay(20);
 	}
 	
 }
+

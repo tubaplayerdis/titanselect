@@ -10,6 +10,7 @@
 #include <functional>
 #include "../../include/liblvgl/lvgl.h"
 #include "../../include/pros/misc.hpp"
+#include "../../include/pros/rtos.hpp"
 
 namespace ts
 {
@@ -30,6 +31,7 @@ namespace ts
     constexpr auto SELECTOR_LABEL_X = 10;
     constexpr auto SELECTOR_LABEL_Y = 6;
     constexpr auto SELECTOR_AUTON_FILE_PATH = "/usd/LastSelectedAuton.txt";
+    constexpr auto SELECTOR_EMPTY_STRING = "";
 }
 
 std::vector<ts::auton> registry_internal = std::vector<ts::auton>();
@@ -39,17 +41,17 @@ static const char* btn_map[ts::SELECTOR_ROWS * ts::SELECTOR_COLS + ts::SELECTOR_
 std::string read_saved_auton()
 {
     std::ifstream auton_file(ts::SELECTOR_AUTON_FILE_PATH);
-    if (!auton_file || !auton_file.is_open()) return "";
+    if (!auton_file || !auton_file.is_open()) return ts::SELECTOR_NO_AUTON_TEXT;
     
     std::string line;
-    if(!std::getline(auton_file, line)) return "";
+    if(!std::getline(auton_file, line)) return ts::SELECTOR_NO_AUTON_TEXT;
 
     for(ts::auton auton : registry_internal)
     {
         if(line == auton.name) return auton.name;
     }
 
-    return "";
+    return ts::SELECTOR_NO_AUTON_TEXT;
 }
 
 void write_saved_auton(std::string auton)
@@ -78,14 +80,15 @@ void ts::selector::handle_events(lv_event_t *e)
     if (obj == selector->l_run_selected_auton_button)
     {
         auto master = pros::Controller(pros::E_CONTROLLER_MASTER);
-        master.rumble("- - -");
-        //Test if rumble waits.
+        master.rumble("-  -  -");
+        pros::delay(3000);
         selector->run_selected_auton();
     }
     else if (obj == selector->l_button_matrix)
     {
         uint32_t btn_id = lv_buttonmatrix_get_selected_button(obj); // get the ID of the pressed/released button
         const char * btn_text = lv_buttonmatrix_get_button_text(obj, btn_id);
+        if(std::string(btn_text) == SELECTOR_NO_AUTON_TEXT) return;
         selector->a_selected_auton = btn_text;
         std::string format = ts::SELECTOR_LABEL_TEXT;
         format.append(get()->a_selected_auton);
@@ -102,34 +105,30 @@ ts::selector* ts::selector::get()
 
 ts::selector::selector()
 {
-    a_selected_auton = SELECTOR_NO_AUTON_TEXT;
+    a_selected_auton = read_saved_auton();
     l_button_matrix = nullptr;
     l_selected_auton_label = nullptr;
     l_run_selected_auton_button = nullptr;
     l_run_selected_auton_button_label = nullptr;
-
-    std::string saved = read_saved_auton();
-    if(!saved.empty()) a_selected_auton = saved;
 
     lv_obj_t * btnm = lv_buttonmatrix_create(lv_screen_active());
 
     //Normally this would go rows->cols, but button matrix likes to be difficult
     short aIndex = 0; //Index for taking stuff out of the autons
     short rIndex = 0; //Index for the one dimensional array of button map
-    std::vector<auton> autons = registry_internal;
     for (int i = 0; i < SELECTOR_COLS; i++)
     {
         for (int j = 0; j < SELECTOR_ROWS; j++)
         {
             //Item will not be valid
-            if (autons.size() > aIndex)
+            if (registry_internal.size() > aIndex)
             {
-                if (autons[aIndex].function == nullptr)
+                if (registry_internal[aIndex].function == nullptr)
                 {
                     btn_map[rIndex] = SELECTOR_INVALID_AUTON_TEXT;
                 } else
                 {
-                    btn_map[rIndex] = autons[aIndex].name.c_str();
+                    btn_map[rIndex] = registry_internal[aIndex].name.c_str();
                 }
             } else
             {
@@ -180,20 +179,19 @@ void ts::selector::refresh_selector()
     //Normally this would go rows->cols, but button matrix likes to be difficult
     short aIndex = 0; //Index for taking stuff out of the autons
     short rIndex = 0; //Index for the one dimensional array of button map
-    std::vector<auton> autons = registry_internal;
     for (int i = 0; i < SELECTOR_COLS; i++)
     {
         for (int j = 0; j < SELECTOR_ROWS; j++)
         {
             //Item will not be valid
-            if (autons.size() > aIndex)
+            if (registry_internal.size() > aIndex)
             {
-                if (autons[aIndex].function == nullptr)
+                if (registry_internal[aIndex].function == nullptr)
                 {
                     btn_map[rIndex] = SELECTOR_INVALID_AUTON_TEXT;
                 } else
                 {
-                    btn_map[rIndex] = autons[aIndex].name.c_str();
+                    btn_map[rIndex] = registry_internal[aIndex].name.c_str();
                 }
             } else
             {
@@ -236,7 +234,7 @@ void ts::selector::hide()
 
 bool ts::selector::is_auton_selected()
 {
-    if(a_selected_auton == "") return false;
+    if(a_selected_auton == SELECTOR_EMPTY_STRING) return false;
     if(a_selected_auton == SELECTOR_NO_AUTON_TEXT) return false;
     if(a_selected_auton == SELECTOR_INVALID_AUTON_TEXT) return false;
     return true;
@@ -262,7 +260,7 @@ void ts::selector::run_auton(std::string name)
 
 std::string ts::selector::get_selected_auton_name()
 {
-    return std::string(a_selected_auton);
+    return a_selected_auton;
 }
 
 std::vector<std::string> ts::selector::get_auton_names()
@@ -277,13 +275,14 @@ std::vector<std::string> ts::selector::get_auton_names()
 
 bool ts::selector::select_auton(std::string name)
 {
-    for(int i = 0; i < ts::SELECTOR_COLS * ts::SELECTOR_ROWS; i++)
+    for(auton obj : registry_internal)
     {
-        const char* button_name = lv_buttonmatrix_get_button_text(l_button_matrix, i);
-        if(name == button_name)
+        if(obj.name == name)
         {
-            lv_buttonmatrix_set_selected_button(l_button_matrix, i);
-            lv_obj_send_event(l_button_matrix, LV_EVENT_VALUE_CHANGED, &i);
+            write_saved_auton(name);
+            a_selected_auton = name;
+            std::string format = SELECTOR_LABEL_TEXT + name;
+            lv_label_set_text(l_selected_auton_label, format.c_str());
             return true;
         }
     }
@@ -292,20 +291,25 @@ bool ts::selector::select_auton(std::string name)
 
 void ts::selector::cycle_autons()
 {
-    //Find the index of the selected auton in the internal registry.
-    int index = -1;
+    if(!is_auton_selected() && registry_internal.size() != 0) {
+        select_auton(registry_internal[0].name);
+    } 
+    if(!is_auton_selected()) {
+        return;
+    }
     for(int i = 0; i < registry_internal.size(); i++)
     {
-        if(registry_internal[i].name == a_selected_auton)
+        if(a_selected_auton == registry_internal[i].name)
         {
-            index = i;
-            break;
+            if(i == registry_internal.size()-1)
+            {
+                select_auton(registry_internal[0].name);
+                return;
+            }
+            select_auton(registry_internal[i+1].name);
+            return;
         }
     }
-    if(index == -1) return;
-    if(index == registry_internal.size()-1) index = 0;//Go back to first
-
-    ts::selector::select_auton(registry_internal[index].name);
 
 }
 

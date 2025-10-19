@@ -76,7 +76,7 @@ Runs a specific auton by its name.
 ##### `std::string get_selected_auton_name()`
 Retrieves the name of the currently selected auton.  
 **Returns:**
-- `"none"` if no auton is selected.
+- `No Auton` if no auton is selected.
 - Otherwise, the name of the selected auton.
 
 ---
