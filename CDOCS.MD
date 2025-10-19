@@ -1,4 +1,4 @@
-# TitanSslect C API Reference
+# Titanselect C API Reference
 
 C interface for the Titanselect auton selector system used in VEX robots running PROS.  
 This API provides procedural access to the auton registration, selection, and execution system.

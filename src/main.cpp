@@ -2,7 +2,7 @@
 #include "titanselect/titanselect.hpp"
 #include "pros/adi.hpp"
 
-ts::selector* selector = nullptr;
+ts::selector* selector = ts::selector::get();
 
 void red_left_auton()
 {
@@ -36,7 +36,7 @@ ts::auton bl("Blue Left", blue_left_auton);
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	selector = ts::selector::get();
+	//selector = ts::selector::get();
 	selector->display();
 }
 

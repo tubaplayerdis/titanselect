@@ -25,7 +25,8 @@ Titanselect is a simple visual atuon selector that works on pros. Titanselect wa
 
 ### Showcase
 
-Add pictures here.
+![Titanselect before selecting an auton](images/ts1.png "Titanselect before selecting an auton")
+![Titanselect after selecting an auton](images/ts2.png "Titanselect after selecting an auton")
 
 ### Features
 
@@ -41,5 +42,5 @@ Titanselect has both a C and C++ api. to take advantage of each, include the res
 
 read the following documentation for each language:
 
-[Titanselect C API](https://github.com/tubaplayerdis/titanselect/blob/main/CDOCS.MD) 
-[Titanselect C++ API](https://github.com/tubaplayerdis/titanselect/blob/main/CPPDOCS.MD)
+[Titanselect C API](CDOCS.MD) 
+[Titanselect C++ API](CPPDOCS.MD)
