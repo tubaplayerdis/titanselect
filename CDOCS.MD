@@ -1,9 +1,34 @@
 # Titanselect C API Reference
 
-C interface for the Titanselect auton selector system used in VEX robots running PROS.  
-This API provides procedural access to the auton registration, selection, and execution system.
+#### Include: `#include "titanselect/titanselect.h"`
 
----
+### Example Usage
+
+```c
+#include "titanselect/titanselect.h"
+
+void left_auton() {
+    // Code for left autonomous routine
+}
+
+void right_auton() {
+    // Code for right autonomous routine
+}
+
+void autonomous() {
+    // Run the currently selected auton
+	ts_run_selected_auton();
+}
+
+void initialize() {
+    // Register autons
+    ts_create_auton("Left", left_auton);
+    ts_create_auton("Right", right_auton);
+
+    // Display selector
+    ts_display_selector();
+}
+```
 
 ### Function: `void ts_create_auton(const char* name, void(*function)())`
 Creates and registers a new autonomous routine.  
@@ -87,31 +112,3 @@ Attempts to select an auton by name.
 Selects the next auton. Will go back to the first registered atuon after reaching the end.
 
 ---
-
-### Example Usage
-
-```c
-#include "titanselect.h"
-
-void left_auton() {
-    // Code for left autonomous routine
-}
-
-void right_auton() {
-    // Code for right autonomous routine
-}
-
-void autonomous() {
-    // Run the currently selected auton
-	ts_run_selected_auton();
-}
-
-void initialize() {
-    // Register autons
-    ts_create_auton("Left", left_auton);
-    ts_create_auton("Right", right_auton);
-
-    // Display selector
-    ts_display_selector();
-}
-```
