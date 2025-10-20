@@ -1,6 +1,6 @@
 # Titanselect guide
 
-## Installing
+# Installing
 
 To begin using Titanselect, you first need to install it. This can be done through the command line and the pros conductor.
 
@@ -11,11 +11,12 @@ First, you should click the pros icon on the sidebar of Visual Studio Code and f
 After that, run the following commands in order to **install Titanselect**.
 
 ```pros c add-depot titanselect https://raw.githubusercontent.com/tubaplayerdis/titanselect/refs/heads/main/depot.json```
+
 ```pros c apply titanselect@1.0.0```
 
-## Basic Setup
+# Basic Setup
 
-After that, include Titanselect into your **main.cpp** file (make sure to include the .hpp file not .h as that is the C api header file)
+After that, include Titanselect into your **main.cpp** file at the top (make sure to include the .hpp file not .h as that is the C api header file)
 
 ```cpp
 #include "titanselect/titanselect.hpp"
@@ -25,7 +26,7 @@ Your main.cpp should look something like this (there might be extra includes, in
 
 ![ProgressPicture](images/ProgressPicture.png)
 
-## Creating an auton
+# Creating an auton
 
 After that, you can create autons by first defining a function that contains the code for them. An example is pictured below:
 
@@ -80,7 +81,7 @@ Your autonomous function should look like this now:
 
 ![AutoFunction](images/AutoFunction.png)
 
-## Complete basic example
+# Complete basic example
 
 Here is a complete example for more context incase you were confused.
 
@@ -174,7 +175,7 @@ void opcontrol() {
 }
 ```
 
-## Dive deeper
+# Dive deeper
 
 Interested in doing more? Check out the C++ api documentation!
 
