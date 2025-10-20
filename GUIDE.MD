@@ -183,4 +183,4 @@ Interested in doing more? Check out the C++ api documentation!
 
 You can also message me on the Vex Robotics Competition Discord and Robolytics Discord. My username is `tbgit` (Display Name: Aaron | 38535A)
 
-If you are also local in the illinois region, feel free to come say hi or ask questions if we are there.
+If you are also local in the illinois region, feel free to come say hi or ask questions if we (38535A) are at the competition.
