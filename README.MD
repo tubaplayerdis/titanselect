@@ -6,7 +6,7 @@ Titanselect is a simple visual atuon selector that works on pros. Titanselect wa
 
 ## Update Titanselect
 
-```pros c update```
+```pros c upgrade```
 
 ## Install Titanselect
 
