@@ -1,19 +1,12 @@
 # Titanselect
 
-#### Documentation
+### Guide (Recommended for first time users)
 
-[Titanselect C API](CDOCS.MD) 
-[Titanselect C++ API](CPPDOCS.MD)
+[Titanselect Guide](GUIDE.MD)
 
 Titanselect is a simple visual atuon selector that works on pros. Titanselect was created as a simple auton selector to be used by vex team 38535A after robodash went OOS (Out Of Support)
 
 **NOTE:** Titanselect uses **LVGL 9**. Make sure you have to latest pros version installed that supports lvgl 9 to use Titanselect
-
-### Access Command Line to install/update
-
-Go to the pros extension icon on the sidebar vs code and click it, then press `integrated terminal`. A terminal should popup at the bottom and you can paste the commands to install/update.
-
-![Pros Icon](images/ProsIcon.png "Pros Icon")
 
 ## Update Titanselect
 
