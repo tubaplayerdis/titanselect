@@ -71,7 +71,7 @@ You can also hide the selector if you want to display other things on the screen
 
 ## Running an auton
 
-You're almost there! Now add this line into your **autonomous** function to run the select auton during autonomous.
+You're almost there! Now add this line into your **autonomous** function to run the selected auton during autonomous.
 
 ```cpp
 ts::selector::get()->run_selected_auton();
