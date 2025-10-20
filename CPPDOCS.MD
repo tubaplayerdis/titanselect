@@ -1,66 +1,6 @@
 # Titanselect C++ API Reference
 
-#### Include: `#include "titanselect/titanselect.hpp"` - This could be different depending on where your file is, but this should work in your main.cpp file.
-
-### Example Usage
-
-```cpp
-#include "titanselect/titanselect.hpp"
-
-// Global selector object pointer
-ts::selector* selector = ts::selector::get();
-
-void left_auton() {
-    // Left-side autonomous routine
-}
-
-void right_auton() {
-    // Right-side autonomous routine
-}
-
-// Register autonomous routines
-ts::auton left("Left", left_auton);
-ts::auton right("Right", right_auton);
-
-void autonomous() {
-    // Run the currently selected auton
-	selector->run_selected_auton();
-}
-
-void initialize() {
-    // Display selector
-    selector->display();
-}
-```
-
-**and/or** - you can access the selector whichever way you best see fit. Understand though that it is a singleton object and there is a reason it has a private constructor.
-
-
-```cpp
-#include "titanselect/titanselect.hpp"
-
-void left_auton() {
-    // Left-side autonomous routine
-}
-
-void right_auton() {
-    // Right-side autonomous routine
-}
-
-// Register autonomous routines
-ts::auton left("Left", left_auton);
-ts::auton right("Right", right_auton);
-
-void autonomous() {
-    // Run the currently selected auton
-	ts::selector::get()->run_selected_auton();
-}
-
-void initialize() {
-    // Display selector
-    ts::selector::get()->display();
-}
-```
+#### File: `titanselect.hpp`
 
 ## Namespace: `ts`
 
@@ -151,3 +91,63 @@ Attempts to select an auton by name.
 Selects the next auton. Will go back to the first registered atuon after reaching the end.
 
 ---
+
+### Example Usage
+
+```cpp
+#include "titanselect/titanselect.hpp"
+
+// Global selector object pointer
+ts::selector* selector = ts::selector::get();
+
+void left_auton() {
+    // Left-side autonomous routine
+}
+
+void right_auton() {
+    // Right-side autonomous routine
+}
+
+// Register autonomous routines
+ts::auton left("Left", left_auton);
+ts::auton right("Right", right_auton);
+
+void autonomous() {
+    // Run the currently selected auton
+	selector->run_selected_auton();
+}
+
+void initialize() {
+    // Display selector
+    selector->display();
+}
+```
+
+**and/or** - you can access the selector whichever way you best see fit. Understand though that it is a singleton object and there is a reason it has a private constructor.
+
+
+```cpp
+#include "titanselect/titanselect.hpp"
+
+void left_auton() {
+    // Left-side autonomous routine
+}
+
+void right_auton() {
+    // Right-side autonomous routine
+}
+
+// Register autonomous routines
+ts::auton left("Left", left_auton);
+ts::auton right("Right", right_auton);
+
+void autonomous() {
+    // Run the currently selected auton
+	ts::selector::get()->run_selected_auton();
+}
+
+void initialize() {
+    // Display selector
+    ts::selector::get()->display();
+}
+```
