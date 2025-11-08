@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "../liblvgl/lvgl.h"
 #include <memory>
 #include <vector>
 #include <string>
@@ -17,19 +16,22 @@ namespace ts
         friend struct auton;
         friend class std::unique_ptr<selector>;
         friend struct std::default_delete<selector>;
-        static void register_auton(auton a);
-        static void handle_events(lv_event_t *e);
 
+        /// Registers an auton. Used internally in the auton constructor and by ts_create_auton().
+        /// @note Calling externally will cause autons to be double registered.
+        static void register_auton(auton a);
+
+        /// Reconstructs the button matrix.
+        /// @note Calling externally is not needed as this is already handled whenever an auton is registered after initally creating the object.
         void refresh_selector();
 
+        /// Internal variable that represents the name of the selected auton.
         std::string a_selected_auton;
 
-        lv_obj_t* l_button_matrix;
-        lv_obj_t* l_selected_auton_label;
-        lv_obj_t* l_run_selected_auton_button;
-        lv_obj_t* l_run_selected_auton_button_label;
-
+        /// Private constructor to enfore singleton design pattern.
         selector();
+
+        /// Private deconstructor to enfore singleton design pattern.
         ~selector();
 
         public:

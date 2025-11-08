@@ -26,13 +26,21 @@ namespace ts
     constexpr auto SELECTOR_BUTTON_Y = 5;
     constexpr auto SELECTOR_BUTTON_WIDTH = 180;
     constexpr auto SELECTOR_BUTTON_HEIGHT = 30;
-    constexpr auto SELECTOR_BUTTON_TEXT = "Test Selected Auton";
     constexpr auto SELECTOR_LABEL_TEXT = "Selected: ";
     constexpr auto SELECTOR_LABEL_X = 10;
     constexpr auto SELECTOR_LABEL_Y = 6;
     constexpr auto SELECTOR_AUTON_FILE_PATH = "/usd/LastSelectedAuton.txt";
     constexpr auto SELECTOR_EMPTY_STRING = "";
 }
+
+//Internal lvgl objects.
+struct selector_visual
+{
+    lv_obj_t* l_button_matrix;
+    lv_obj_t* l_selected_auton_label;
+};
+
+selector_visual objects;
 
 std::vector<ts::auton> registry_internal = std::vector<ts::auton>();
 std::unique_ptr<ts::selector> selector_instance = nullptr;
@@ -73,27 +81,16 @@ void ts::selector::register_auton(ts::auton a)
     if(selector_instance) selector_instance.get()->refresh_selector();
 }
 
-void ts::selector::handle_events(lv_event_t *e)
+void handle_events(lv_event_t *e)
 {
     ts::selector* selector = ts::selector::get();
     lv_obj_t * obj = lv_event_get_target_obj(e); // get the button matrix object
-    if (obj == selector->l_run_selected_auton_button)
-    {
-        auto master = pros::Controller(pros::E_CONTROLLER_MASTER);
-        master.rumble("-  -  -");
-        pros::delay(3000);
-        selector->run_selected_auton();
-    }
-    else if (obj == selector->l_button_matrix)
+    if (obj == objects.l_button_matrix)
     {
         uint32_t btn_id = lv_buttonmatrix_get_selected_button(obj); // get the ID of the pressed/released button
-        const char * btn_text = lv_buttonmatrix_get_button_text(obj, btn_id);
-        if(std::string(btn_text) == SELECTOR_NO_AUTON_TEXT) return;
-        selector->a_selected_auton = btn_text;
-        std::string format = ts::SELECTOR_LABEL_TEXT;
-        format.append(get()->a_selected_auton);
-        lv_label_set_text(get()->l_selected_auton_label, format.c_str());
-        write_saved_auton(selector->a_selected_auton);
+        std::string btn_text = lv_buttonmatrix_get_button_text(obj, btn_id);
+        if(btn_text == ts::SELECTOR_NO_AUTON_TEXT) return;
+        selector->select_auton(btn_text);
     }
 }
 
@@ -106,10 +103,8 @@ ts::selector* ts::selector::get()
 ts::selector::selector()
 {
     a_selected_auton = read_saved_auton();
-    l_button_matrix = nullptr;
-    l_selected_auton_label = nullptr;
-    l_run_selected_auton_button = nullptr;
-    l_run_selected_auton_button_label = nullptr;
+    objects.l_button_matrix = nullptr;
+    objects.l_selected_auton_label = nullptr;
 
     lv_obj_t * btnm = lv_buttonmatrix_create(lv_screen_active());
 
@@ -148,20 +143,9 @@ ts::selector::selector()
     lv_obj_set_size(btnm, SELECTOR_WIDTH, SELECTOR_HEIGHT);
     lv_obj_align(btnm, LV_ALIGN_BOTTOM_MID, SELECTOR_X_OFFSET, SELECTOR_Y_OFFSET);
 
-    lv_obj_add_event_cb(btnm, selector::handle_events, LV_EVENT_VALUE_CHANGED, nullptr);
+    lv_obj_add_event_cb(btnm, handle_events, LV_EVENT_VALUE_CHANGED, nullptr);
 
-    l_button_matrix = btnm;
-
-
-    lv_obj_t* btnau = lv_button_create(lv_screen_active());
-    lv_obj_set_size(btnau, SELECTOR_BUTTON_WIDTH, SELECTOR_BUTTON_HEIGHT);
-    lv_obj_set_pos(btnau, SELECTOR_BUTTON_X, SELECTOR_BUTTON_Y);
-    lv_obj_t* btnlabel = lv_label_create(btnau);
-    lv_label_set_text(btnlabel, SELECTOR_BUTTON_TEXT);
-    lv_obj_align(btnlabel, LV_ALIGN_CENTER, 0, 0);
-
-    l_run_selected_auton_button = btnau;
-    l_run_selected_auton_button_label = btnlabel;
+    objects.l_button_matrix = btnm;
 
     std::string labelText = SELECTOR_LABEL_TEXT;
     labelText.append(a_selected_auton);
@@ -169,7 +153,7 @@ ts::selector::selector()
     lv_label_set_text(label, labelText.c_str());
     lv_obj_set_style_text_font(label, &lv_font_montserrat_24, 0);
     lv_obj_set_pos(label, SELECTOR_LABEL_X, SELECTOR_LABEL_Y);
-    l_selected_auton_label = label;
+    objects.l_selected_auton_label = label;
 
     hide();
 }
@@ -205,31 +189,25 @@ void ts::selector::refresh_selector()
     }
     btn_map[rIndex] = "";
 
-    lv_buttonmatrix_set_map(l_button_matrix, btn_map);
+    lv_buttonmatrix_set_map(objects.l_button_matrix, btn_map);
 }
 
 ts::selector::~selector()
 {
-    lv_obj_delete(l_button_matrix);
-    lv_obj_delete(l_selected_auton_label);
-    lv_obj_delete(l_run_selected_auton_button);
-    lv_obj_delete(l_run_selected_auton_button_label);
+    lv_obj_delete(objects.l_button_matrix);
+    lv_obj_delete(objects.l_selected_auton_label);
 }
 
 void ts::selector::display()
 {
-    set_lv_obj_visibility(l_button_matrix, false);
-    set_lv_obj_visibility(l_selected_auton_label, false);
-    set_lv_obj_visibility(l_run_selected_auton_button, false);
-    set_lv_obj_visibility(l_run_selected_auton_button_label, false);
+    set_lv_obj_visibility(objects.l_button_matrix, false);
+    set_lv_obj_visibility(objects.l_selected_auton_label, false);
 }
 
 void ts::selector::hide()
 {
-    set_lv_obj_visibility(l_button_matrix, true);
-    set_lv_obj_visibility(l_selected_auton_label, true);
-    set_lv_obj_visibility(l_run_selected_auton_button, true);
-    set_lv_obj_visibility(l_run_selected_auton_button_label, true);
+    set_lv_obj_visibility(objects.l_button_matrix, true);
+    set_lv_obj_visibility(objects.l_selected_auton_label, true);
 }
 
 bool ts::selector::is_auton_selected()
@@ -282,7 +260,7 @@ bool ts::selector::select_auton(std::string name)
             write_saved_auton(name);
             a_selected_auton = name;
             std::string format = SELECTOR_LABEL_TEXT + name;
-            lv_label_set_text(l_selected_auton_label, format.c_str());
+            lv_label_set_text(objects.l_selected_auton_label, format.c_str());
             return true;
         }
     }
@@ -355,9 +333,11 @@ extern "C" void ts_run_auton(const char* name)
     ts::selector::get()->run_auton(std::string(name));
 }
 
+std::string selected_auton_name = "No Auton";
+
 extern "C" const char* ts_get_selected_auton_name()
 {
-    static std::string selected_auton_name = ts::selector::get()->get_selected_auton_name();
+    selected_auton_name = ts::selector::get()->get_selected_auton_name();
     return selected_auton_name.c_str();
 }
 
