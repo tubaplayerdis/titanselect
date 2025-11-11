@@ -2,7 +2,7 @@
 
 # Prerequisites
 
-It is highly suggested that you use a microsd card. To use a microsd card with the V5 Brain it must meet the following requirements
+It is highly suggested that you use a microsd card. This allows Titanselect to save and load your previously selected auton when the program starts. To use a microsd card with the V5 Brain the micro sd card must meet the following requirements
 
  - At or below 16bg capcity
  - Formatted to FAT32
