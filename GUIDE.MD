@@ -94,7 +94,7 @@ Your autonomous function should look like this now:
 
 ## READ THIS IF YOU ARE NOT USING A MICROSD CARD
 
-If you are not using a microsd card, Titanselect will not be able to load the daved auton when testing autons. To fix this use the following line in your autonomous function to run an auton of your choice:
+If you are not using a microsd card, Titanselect will not be able to load the previously selected auton when testing autons. To fix this use the following line in your autonomous function to run an auton of your choice:
 
 ```cpp
 ts::selector::get()->run_auton("NameOfAuton");
