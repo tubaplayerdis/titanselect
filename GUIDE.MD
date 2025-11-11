@@ -1,5 +1,14 @@
 # Titanselect guide
 
+# Prerequisites
+
+It is highly suggested that you use a microsd card. To use a microsd card with the V5 Brain it must meet the following requirements
+
+ - At or below 16bg capcity
+ - Formatted to FAT32
+
+[Vex forum for context](https://www.vexforum.com/t/what-sd-cards-are-supported-for-the-v5-brain/59423)
+
 # Installing
 
 To begin using Titanselect, you first need to install it. This can be done through the command line and the pros conductor.
@@ -73,6 +82,8 @@ You can also hide the selector if you want to display other things on the screen
 
 You're almost there! Now add this line into your **autonomous** function to run the selected auton during autonomous.
 
+This will **not** work wwhen testing autons if are not using a microsd card.
+
 ```cpp
 ts::selector::get()->run_selected_auton();
 ```
@@ -80,6 +91,23 @@ ts::selector::get()->run_selected_auton();
 Your autonomous function should look like this now:
 
 ![AutoFunction](images/AutoFunction.png)
+
+## READ THIS IF YOU ARE NOT USING A MICROSD CARD
+
+If you are not using a microsd card, Titanselect will not be able to load the daved auton when testing autons. To fix this use the following line in your autonomous function to run an auton of your choice:
+
+```cpp
+ts::selector::get()->run_auton("NameOfAuton");
+```
+
+So your autonomous function would look like this when you are **testing autons**:
+
+```cpp
+void autonomous()
+{
+	ts::selector::get()->run_auton("NameOfAuton");
+}
+```
 
 # Complete basic example
 
