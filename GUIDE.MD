@@ -2,7 +2,7 @@
 
 # Prerequisites
 
-It is highly suggested that you use a microsd card. This allows Titanselect to save and load your previously selected auton when the program starts. To use a microsd card with the V5 Brain the micro sd card must meet the following requirements
+It is highly suggested that you use a micro-sd card. This allows Titanselect to save and load your previously selected auton when the program starts. To use a micro-sd card with the V5 Brain the micro-sd card must meet the following requirements
 
  - At or below 16bg capcity
  - Formatted to FAT32
@@ -92,15 +92,15 @@ Your autonomous function should look like this now:
 
 ![AutoFunction](images/AutoFunction.png)
 
-## READ THIS IF YOU ARE NOT USING A MICROSD CARD
+## READ THIS IF YOU ARE NOT USING A MICRO-SD CARD
 
-If you are not using a microsd card, Titanselect will not be able to load the previously selected auton when testing autons. To fix this use the following line in your autonomous function to run an auton of your choice:
+If you are not using a micro-sd card, Titanselect will not be able to load the previously selected auton when testing autons. To fix this use the following line in your autonomous function to run an auton of your choice:
 
 ```cpp
 ts::selector::get()->run_auton("NameOfAuton");
 ```
 
-So your autonomous function would look like this when you are **testing autons**:
+So your autonomous function would look like this when you are **testing autons without a micro-sd card**:
 
 ```cpp
 void autonomous()
